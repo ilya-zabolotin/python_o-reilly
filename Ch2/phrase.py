@@ -5,11 +5,10 @@ print(plist)
 
 plist.pop(0)
 for i in range(4):
-    plist.pop(7)
+    plist.pop()
 plist.remove('\'')
-plist.insert(3, plist.pop(5))
-plist.insert(4, plist.pop(5))
-plist.insert(2, plist.pop(5))
+plist.extend([plist.pop(), plist.pop()])
+plist.insert(2, plist.pop(3))
 
 new_phrase = ''.join(plist)
 print(plist)
