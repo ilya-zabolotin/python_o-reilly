@@ -3,9 +3,9 @@ from vsearch import search4letters
 app = Flask(__name__)
 
 def log_request(req: 'flask_requst', res: str) -> None:
-        with open('vsearch.log', 'a') as logfile:
-                print(req, res, file=logfile)
-                
+		with open('vsearch.log', 'a') as logfile:
+			print(req.form, req.remote_addr, req.user_agent, res, file=logfile, sep='|')
+
 
 @app.route('/search4', methods=['POST'])
 def do_search () -> 'html':
@@ -27,13 +27,18 @@ def enrty_page() -> 'html':
 		
 		
 @app.route('/viewlog')
-def view_the_log() -> str:
+def view_the_log() -> 'html':
+	list_log = []
 	with open('vsearch.log') as logfile:
-		contents = logfile.read()
-	return escape(contents)
-
-
-
+		for line in logfile:
+			list_log.append([])
+			for item in line.split('|'):
+				list_log[-1].append(escape(item))
+	titles = ('Form Data', 'Remote_addr', 'User_agent', 'Results')
+	return render_template('viewlog.html',
+							the_titla='View Log',
+							the_row_titles=titles,
+							the_data=list_log,)
 
 if __name__ == '__main__':
         app.run(debug=True)
