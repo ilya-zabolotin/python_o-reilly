@@ -23,7 +23,7 @@ def log_request(req: 'flask_requst', res: str) -> None:
                           res, ))
     conn.commit()
     cursor.close()
-    connection.close()
+    conn.close()
 
 
 @app.route('/search4', methods=['POST'])
