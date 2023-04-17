@@ -2,13 +2,15 @@ from flask import Flask, render_template, request, escape
 from vsearch import search4letters
 app = Flask(__name__)
 
+import mysql.connector
+	
 def log_request(req: 'flask_requst', res: str) -> None:
     dbconfig = { 'host': '127.0.0.1',
                  'user': 'vsearch',
                  'password': 'vsearchpasswd',
                  'database': 'vsearchlogDB', }
     
-    import mysql.connector
+
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
 
